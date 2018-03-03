@@ -1,0 +1,111 @@
+%%%%% Don't Make Changes Below Here %%%%%
+\documentclass{article}\usepackage[utf8]{inputenc}\usepackage[margin=0.4cm,top=0.4cm,bottom=0.4cm]{geometry}\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}\usepackage{calligra}\usepackage{tikz}\usetikzlibrary{matrix,fit,chains,calc,scopes}\usepackage{tcolorbox}\tcbuselibrary{skins}\tcbset{Baystyle/.style={sharp corners,enhanced,boxrule=6pt,colframe=Aquamarine,height=\textheight,width=\textwidth,borderline={8pt}{-11pt}{},}}\usepackage{amsmath,amssymb,amsthm,tikz,tkz-graph,color,chngpage,soul,hyperref,csquotes,graphicx,floatrow}\newcommand*{\QEDB}{\hfill\ensuremath{\square}}\newtheorem*{prop}{Proposition}\renewcommand{\theenumi}{\alph{enumi}}\usepackage[shortlabels]{enumitem}\usetikzlibrary{matrix,calc}\MakeOuterQuote{"}\newtheorem{theorem}{Theorem} \usetikzlibrary{shapes} \usepackage{lipsum}\usepackage{tabularx,ragged2e,booktabs,caption}\tcbuselibrary{breakable}\newenvironment{yframed}{\begin{tcolorbox}[breakable,colback=gray!3,title after break={\textit{\color{red}Solution (cont.)}},colbacktitle=gray!3, coltitle=black,titlerule=-1pt] }{\end{tcolorbox}}\newtcolorbox{mybox}{colback=black!15!white, colframe=white,arc=12pt}\newtcolorbox{myboxot}{colback=green!15!white, colframe=white,arc=12pt,width=110pt, height=27pt}\newtcbox{\mylib}{enhanced,boxrule=0pt,top=0mm,bottom=0mm,right=0mm,left=4mm,arc=4pt,boxsep=9pt,before upper={\vphantom{dlg}},colframe=green!50!black,coltext=green!25!black,colback=green!10!white,overlay={\begin{tcbclipinterior}\fill[green!75!blue!50!white] (frame.south west)rectangle node[text=white,font=\sffamily\bfseries\tiny,rotate=90] {Problem} ([xshift=4mm]frame.north west);\end{tcbclipinterior}}}\newtcbox{\mylibot}{enhanced,boxrule=0pt,top=0mm,bottom=0mm,right=0mm,arc=4pt,boxsep=9pt,before upper={\vphantom{dlg}},colframe=green!50!black,coltext=green!25!black,colback=green!10!white,overlay={\begin{tcbclipinterior}\fill[red!75!blue!50!white] (frame.south west)rectangle node[text=white,font=\sffamily\bfseries\tiny,rotate=90] {Other} ([xshift=4mm]frame.north west);\end{tcbclipinterior}}}
+\usepackage[makeroom]{cancel}
+\def\Title{\begin{tcolorbox}[Baystyle,]{\begin{center}\vspace*{0.14\textheight}
+{\rule{\textwidth}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}}
+\rule{\textwidth}{0.4pt}\\[0.2\baselineskip]{\fontsize{45}{45}\scshape CS 189: Introduction to \\[-0.3\baselineskip] Machine Learning \\[0.2\baselineskip] \calligra Fall 2017 \\[0.2\baselineskip]}
+{\rule{\textwidth}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}}
+\rule{\textwidth}{1.6pt}\\[\baselineskip]\vspace{0.05\textheight}{{\fontsize{45}{45}\scshape$\bullet$\\ {Discussion 1}\\\vspace*{0.01\textheight} }{{\fontsize{18}{18}\scshape{Due on Friday, August 25th, 2017 at 4 p.m.\\}}}\fontsize{45}{45}\scshape$\bullet$  \\}\vspace*{0.1\textheight}{\fontsize{12}{12}\calligra Solutions by\\}{\fontsize{28}{28}\scshape \Name \\}\vspace*{0.01\textheight}{\fontsize{12}{12}\scshape \SID} \\\vspace*{0.05\textheight}\end{center}}\end{tcolorbox}\newgeometry{margin=0.75in}}\def\BeginSolution{\begin{yframed}}\def\EndSolution{\end{yframed}}
+\renewcommand{\baselinestretch}{1.25}
+\newcommand{\circled[1]}{\tikz[baseline=(char.base)]{%
+            \node[shape=circle,draw,inner sep=3pt] (char) {#1};}}
+\newcommand{\chosen[1]}[black,fill=black]{\tikz[baseline=(char.base)]{%
+            \node[shape=circle,draw,inner sep=3pt] (char) {#1};}}
+%%%%% Don't Make Changes Above Here %%%%%
+
+%%%%% Template Begins Here %%%%%
+
+\def\Name{Ninh DO}  % Your name
+\def\SID{25949105}  % Your student ID number
+
+
+\pagestyle{empty}
+\begin{document}
+\Title
+%%%% Problem 1 Starts Here %%%%
+\vspace{-2mm}\noindent\begin{mybox}{\begin{center}\textbf{\color{black}Problem 1: Unitary Invariance}\end{center}}\end{mybox}
+
+Prove that the regular Euclidean norm (also called the 2-norm) is unitary invariant; in other words, the 2-norm of a vector is the same, regardless of how you apply a rigid transformation to the vector (i.e., rotate or reflect). Note that rigid transformation of a vector $\mathbf{v}\in\mathbb{R}^d$ means multiplying by an orthogonal $\mathbf{U}\in\mathbb{R}^{d\times d}$.
+\BeginSolution % 1
+%%%%YOUR SOLUTION HERE%%%%
+Let $\mathbf{U} = \begin{bmatrix}
+\mathbf{u_1} & \mathbf{u_2} & \cdots & \mathbf{u_n}
+\end{bmatrix}$ orthogonal, i.e. $\mathbf{u_i}\cdot\mathbf{u_i} = 1$ and $\mathbf{u_i}\cdot\mathbf{u_j} = 0$ for $i \neq j$.\\
+We prove $\vert\vert \mathbf{a}^T\mathbf{U} \vert\vert = \vert\vert\mathbf{a}\vert\vert$ for all $\mathbf{a} = \begin{bmatrix}
+a_1 & a_2 & \cdots & a_n
+\end{bmatrix}$, or $\vert\vert \mathbf{a}^T\mathbf{U} \vert\vert^2 = \vert\vert\mathbf{a}\vert\vert^2$ where $\vert\vert\cdot\vert\vert$ is 2-norm.\\
+%
+\begin{eqnarray}
+	\text{RHS}  &=& \sum\limits_{i=1}^n a^2_i \\
+	\text{LHS}  &=& \left(\sum\limits_{i=1}^n a_i\mathbf{u_i}\right)\cdot\left(\sum\limits_{i=1}^n a_i\mathbf{u_i}\right) \\
+	&=& \sum\limits_{i=1}^n\sum\limits_{j=1}^n a_i a_j\mathbf{u_i}\cdot\mathbf{u_j} \nonumber \\
+	&=& \sum\limits_{i=1}^n\sum\limits_{j=1,j=i}^n a_i a_j\cancelto{1}{\mathbf{u_i}\cdot\mathbf{u_j}} + \sum\limits_{i=1}^n\sum\limits_{j=1,j\neq i}^n a_i a_j\cancelto{0}{\mathbf{u_i}\cdot\mathbf{u_j}} \nonumber \\
+	&=& \sum\limits_{i=1}^n a^2_i \nonumber
+\end{eqnarray}
+%
+Therefore, $\text{LHS} = \text{RHS}$
+\EndSolution
+
+%%%% Problem 1 Ends Here %%%%
+\clearpage
+
+%%%% Problem 2 Starts Here %%%%
+\vspace{-2mm}\noindent\begin{mybox}{\begin{center}\textbf{\color{black}Problem 2: Eigenvalues}\end{center}}\end{mybox}
+
+\begin{enumerate}[1.]
+\item Let $\mathbf{A}$ be an invertible matrix. Show that if $\mathbf{v}$ is an eigenvector of $\mathbf{A}$ with eigenvalue $\lambda$ , then it
+is also an eigenvector of $\mathbf{A}^{-1}$ with eigenvalue $\lambda^{-1}$.
+\BeginSolution % 2 (1)
+%%%YOUR SOLUTION HERE%%%
+%
+\begin{align}
+	\mathbf{A}\mathbf{v} = 
+\end{align}
+\EndSolution
+\item A square and symmetric matrix $\mathbf{A}$ is said to be positive semidefinite (PSD) $(\mathbf{A} \succeq 0)$ if $\forall\mathbf{v}\neq\mathbf{0}, \mathbf{v}^T\mathbf{A}\mathbf{v} \geq 0$. Show that $\mathbf{A}$ is PSD if and only if all of its eigenvalues are nonnegative. \\
+Hint: Use the eigendecomposition of the matrix $\mathbf{A}$.
+\BeginSolution % 2 (2)
+%%%YOUR SOLUTION HERE%%%
+\EndSolution
+\end{enumerate}
+
+%%%% Problem 2 Ends Here %%%%
+\clearpage
+
+%%%% Problem 3 Starts Here %%%%
+\vspace{-2mm}\noindent\begin{mybox}{\begin{center}\textbf{\color{black}Problem 3: Least Squares (using vector calculus)}\end{center}}\end{mybox}
+
+\begin{enumerate}[1.]
+\item In ordinary least-squares linear regression, there is typically no $\mathbf{x}$ such that $\mathbf{A}\mathbf{x} = \mathbf{y}$ (these are typically overdetermined systems — too many equations given the number of unknowns). Hence, we need to find an approximate solution to this problem. The residual vector will be $\mathbf{r} = \mathbf{A}\mathbf{x} - \mathbf{y}$ and we want to make it as small as possible. The most common case is to measure the residual error with the standard Euclidean 2-norm. So the problem becomes:
+%
+\begin{equation}
+	\min\limits_{\mathbf{x}}\vert\vert \mathbf{A}\mathbf{x} - \mathbf{y} \vert\vert^2_2
+\end{equation}
+%
+
+Where $\mathbf{A}\in\mathbb{R}^{m\times n},\mathbf{x}\in\mathbb{R}^{m},\mathbf{y}\in\mathbb{R}^{n} $
+Derive using vector calculus an expression for an optimal estimate for $\mathbf{x}$ for this problem assuming $\mathbf{A}$ is full rank.
+\BeginSolution % 3 (1)
+%%%YOUR SOLUTION HERE%%%
+%
+We take the derivative of $\vert\vert \mathbf{A}\mathbf{x} - \mathbf{y} \vert\vert^2_2$ and set it to zero:
+\begin{align}\label{ols}
+	\frac{\partial \vert\vert\mathbf{A}\mathbf{x} - \mathbf{y}\vert\vert^2_2}{\partial \mathbf{x}} &= \frac{\partial\left(\mathbf{A}\mathbf{x} - \mathbf{y}\right)^T\left(\mathbf{A}\mathbf{x} - \mathbf{y}\right)}{\partial\mathbf{x}} \nonumber\\
+	&= \frac{\partial\left(\mathbf{x}^T\mathbf{A}^T\mathbf{A}\mathbf{x} - \mathbf{y}^T\mathbf{A}\mathbf{x} - \mathbf{x}^T\mathbf{A}^T\mathbf{y} + \mathbf{y}^T\mathbf{y}\right)}{\partial\mathbf{x}} \nonumber\\
+	&= \frac{\partial\left(\mathbf{x}^T\mathbf{A}^T\mathbf{A}\mathbf{x}\right)}{\partial\mathbf{x}} - \frac{\partial\left(2\mathbf{x}^T\mathbf{A^T}\mathbf{y}\right)}{\partial\mathbf{x}} + \cancelto{0}{\frac{\partial\left(\mathbf{y}^T\mathbf{y}\right)}{\partial\mathbf{x}}} \nonumber\\
+	&= 2\mathbf{A}^T\mathbf{A}\mathbf{x} - 2\mathbf{A^T}\mathbf{y} = 0 \nonumber \\
+	\Rightarrow\quad &\mathbf{x} = \left(\mathbf{A^T}\mathbf{A}\right)^{-1}\mathbf{A^T}\mathbf{y}
+\end{align}
+\EndSolution
+\item What should we do if $\mathbf{A}$ is not full rank?
+\BeginSolution % 3 (2)
+%%%YOUR SOLUTION HERE%%%
+If $\mathbf{A}$ is not full rank, the equation \ref{ols} is underdetermined, as some columns of $\mathbf{A^T}\mathbf{A}$ depends on the others. in such a case, we cannot take the inverse of $\mathbf{A^T}\mathbf{A}$ and the equation has infinite solutions.\\
+What we should do is we will take the pseudo-inverse of $\mathbf{A^T}\mathbf{A}$
+\EndSolution
+\end{enumerate}
+%%%% Problem 3 Ends Here %%%%
+\clearpage
+
+\end{document}
+%%%%% Template Ends Here %%%%%
