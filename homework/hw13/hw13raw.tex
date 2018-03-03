@@ -1,0 +1,231 @@
+\Question{Getting Started}
+
+You may typeset your homework in latex or submit neatly handwritten and scanned solutions. Please make sure to start each question on a new page, as grading (with Gradescope) is much easier that way! Deliverables:
+
+\begin{enumerate}
+  \item Submit a PDF of your writeup to assignment on Gradescope, ``HW[n] Write-Up"
+  \item Submit all code needed to reproduce your results, ``HW[n] Code".
+  \item Submit your test set evaluation results, ``HW[n] Test Set".
+\end{enumerate}
+
+After you've submitted your homework, be sure to watch out for the self-grade form.
+
+\begin{Parts}
+
+\Part Before you start your homework, write down your team. Who else did you work with on this homework? List names and email addresses. In case of course events, just describe the group. How did you work on this homework? Any comments about the homework?
+
+\vspace{15pt}
+\framebox(465, 75){}
+
+\Part Please copy the following statement and sign next to it:
+
+\textit{I certify that all solutions are entirely in my words and that I have not looked at another student's solutions. I have credited all external sources in this write up.}
+
+\vspace{15pt}
+\framebox(465, 75){}
+
+\end{Parts}
+
+\pagebreak
+
+\newcommand{\cl}{\ensuremath{{\sf cl}}}
+\newcommand{\conv}{\ensuremath{{\sf \overline{conv}}}}
+\Question{Function approximation via neural networks}
+
+In this problem, you will prove a special case of a classical result in the approximation theory of neural networks. In particular, you will show that given a natural class of functions, a two-layer neural network (having just one hidden layer) with certain activation functions approximates every function in the class \emph{exponentially} better than polynomial regression using the same number of coefficients. Clearly then, neural networks incur a smaller bias than polynomials for the same number of parameters. The related question of variance of neural network models is also interesting, but will not addressed by this problem.
+
+The class of functions that we will be interested in approximating is given by the set 
+\begin{align*}
+\mathcal{F}_{{\sf cos}} = \left\{f: \mathbb{R}^d \to \mathbb{R} \text{ s.t. } f(x) = \frac{1}{2 \|w\|_1} \cos( \langle w, x \rangle ) \text{ for some } w \neq {\bf 0} \right\}.
+\end{align*}
+Here, ${\bf 0}$ denotes the zero vector in $\mathbb{R}^d$.
+
+Define a thresholding function $\tau: \mathbb{R} \mapsto \mathbb{R}$ as any bounded function for which $\tau(z) \to 1$ as $z \to \infty$ and $\tau(z) \to 0$ as $z \to -\infty$.
+We will consider a neural network function $h: \mathbb{R}^d \mapsto \mathbb{R}$ of the form 
+\begin{align*}
+h(x) = \sum_{k=1}^p c_k \tau( \langle w_k, x\rangle + b_k),
+\end{align*} 
+where $(w_k, b_k, c_k) \in \mathbb{R}^d \times \mathbb{R} \times \mathbb{R}$ for each $k = 1, 2, \ldots, p$. Denote the class of such functions having $p$ parameters and $\sum_{k = 1}^p |c_k| \leq 1$ by $\mathcal{H}_p$.
+
+Given any function $f \in \mathcal{F}_{{\sf cos}}$, we will show that it can be approximated effectively by a linear combination of a small number of threshold functions. In particular, we will measure the quality of approximation by the average error over the set $[0, 1]^{d}$ as
+\begin{align}
+E(f, p) = \inf_{h \in \mathcal{H}_p} \;\;\; \int_{x \in [0,1]^d } (f(x) - h(x))^2 dx. \label{eq:error}
+\end{align}
+In this problem, you will show that for all functions $f \in \mathcal{F}_{\sf cos}$, we have
+\begin{align*}
+E(f, p) \leq \frac{1}{p},
+\end{align*}
+thus showing that we can approximate any function in $\mathcal{F}_{\sf cos}$ to within error $\epsilon$ using at most $1/ \epsilon$ linear combinations of threshold functions. Since each threshold function involves $d + 2$ parameters, we will have shown that an $\epsilon$-approximation is achievable using $O\left( \frac{d}{\epsilon} \right)$ scalar parameters. 
+
+In contrast, for polynomial approximators, we will show that at least $\left( \frac{1}{\epsilon d} \right)^d$ parameters are necessary to obtain a similar $\epsilon$-approximation.
+
+Parts (c-h) will walk you through a proof that linear combinations of thresholding functions (examples of which you will see in part (a)) are good approximators of functions in $\mathcal{F}_{\sf cos}$. You will see examples of functions in $\mathcal{F}_{\sf cos}$ in part (b). We will release a note on Piazza showing the approximation lower bound for polynomial functions mentioned above, so you have an idea why polynomials perform worse.
+
+{\bf Disclaimer:} We will deliberately avoid some mathematical subtleties in the following proof that are essential to handle in order for it to qualify as a complete argument. The goal here is for you to understand the concrete higher order message.
+
+\begin{Parts}
+\Part {\bf Verify that the following commonly used functions are thresholding functions.}
+\begin{enumerate}
+\item $\sigma(t) = \frac{1}{1 + e^{-t}}$
+\item ${\sf ReLu}(t) - {\sf ReLu}(t - 1)$
+\end{enumerate}
+
+
+
+\Part Fix $d = 2$, and {\bf show 3D plots of functions in the class $\mathcal{F}_{{\sf cos}}$, for five sufficiently different choices of $w$}; you will be plotting $f(x)$ for $x \in [0, 1]^2$. The goal is for you to convince yourself that these are not pathologically constructed functions; they look like many underlying regression functions we might want to approximate in practice. What is true but will not be shown in this problem is that many practical functions of interest including Gaussian PDFs and functions with sufficiently many derivatives can be expressed as a linear combination of functions in $\mathcal{F}_{{\sf cos}}$.
+
+
+
+\Part Define the closure $\cl(T)$ of a set $T$ as the union of $T$ with its limit points, e.g. the closure of the set $\{x \in \mathbb{R}^d: \|x\|_2 < 1\}$ is given by the set $\{x \in \mathbb{R}^d: \|x\|_2 \leq 1\}$.
+
+Define the step function $S(t)$ to be the indicator function that $t \geq 0$, i.e., $S(t) = 1$ for all $t \geq 0$, and $0$ otherwise. {\bf Show that for each $(w', b') \in \mathbb{R}^d \times \mathbb{R}$, we have}
+\begin{align*}
+S( \langle w', x \rangle + b') \in \cl \left( \{p: p(x) = \tau(\langle w, x \rangle + b) \text{ or } p(x) = - \tau(\langle w, x \rangle + b), \text{ for some } w, b \} \right).
+\end{align*}
+Showing pointwise convergence is sufficient.
+
+Hint: It should be sufficient to show that threshold functions with appropriately scaled arguments are step functions in the limit. Show this, and argue why it is sufficient.
+
+
+
+\Part We will now try to approximate the function $\cos (\langle w, x \rangle)$ with a linear combination of step functions of the form $S( \langle w, x \rangle )$. Notice that it is sufficient to simply approximate $\cos(y)$ by $S(y)$, since the arguments of the two functions are identical. Also notice that since we only care about approximating the function within the set $\|x\|_\infty \leq 1$, we have by Holder's inequality that $y = \langle w, x \rangle \leq \|w\|_1 \|x\|_\infty = \|w\|_1$. Executing a change of variables $y' = y/ \|w\|_1$, it suffices now approximate the function $c(y') = \cos (\|w\|_1 y')$ within the range $y' \in [-1, 1]$.
+
+{\bf Show that for any fixed $\delta > 0$, we can design a linear combination of step functions that is $\delta$-close to $c(y')$ for every $y' \in [-1, 1]$.}
+
+Hint: Recall how a continuous function can be successively approximated by finer and finer piecewise constant functions. It may be helpful to define a finite collection of points $P_\delta$ on the set $[-1, 1]$ such that $c(y')$ changes its value by at most $\delta$ for successive points. 
+
+
+
+\Part Let us consider the absolute sum of coefficients of the linear combination you computed above. You should have computed it to be 
+\begin{align*}
+\sum_i |c(z_i) - c(z_{i-1})|,
+\end{align*}
+where the points $\{z_i\}_{i}$ are the points defined in $P_\delta$. {\bf Show that this sum is bounded by $2 \|w\|_1$.} Conclude that for every $w \neq {\bf 0}$, we have approximated $\cos (\langle w, x \rangle)$ by a linear combination of step functions having sum of absolute coefficients at most $2 \|w\|_1$.
+
+Hint: Finite differences are derivatives in the limit. The sum can be upper bounded by an appropriate integral.
+
+
+
+\Part Denote the closed convex hull of a set $T$ by $\conv(T)$; this is simply the closure of the convex hull of $T$. Using the previous parts, {\bf show that}
+\begin{align*}
+\mathcal{F}_{{\sf cos}} \subseteq \conv \left( \{ p: p(x) = \tau(\langle w, x \rangle + b) \text{ or } p(x) = - \tau(\langle w, x \rangle + b), \text{ for some } w, b \} \right).
+\end{align*} 
+We have thus shown that the function class of interest can be represented by a convex combination of threshold functions and negative threshold functions.
+
+
+
+\Part How many threshold functions do you need to approximate any function $f \in \mathcal{F}_{{\sf cos}}$ to within some error $\epsilon$? This will be shown in the next two parts via an existence argument. 
+
+Notice that roughly speaking, we have by definition of the convex hull that $f = \sum_{i = 1}^m c_i g_i^*$ for some $m$ functions $g_i^*(x) = \tau(\langle w_i, x \rangle + b)$, and $c_i \geq 0$ with $\sum_{i} c_i = 1$.
+Let $G$ be a random variable such that $G = g_i^*$ with probability $c_i$. With $p$ independent samples $G_1, G_2, G_3, \ldots$, define
+\begin{align*}
+f_p = \frac{1}{p} \sum_{i= 1}^p G_i.
+\end{align*}
+Let $\|g - h\|^2 := \int_{x \in [0,1]^d } (g(x) - h(x))^2 dx$ for any two functions $g$ and $h$.
+{\bf Show that}
+\begin{align}
+\mathbb{E} [\| f_p - f \|^2] \leq \frac{1}{p}, \label{eq:fp}
+\end{align}
+where the expectation is taken over the random samples $G_1, \ldots, G_p$. You may assume that expectations commute with integrals, i.e., you can switch the order in which you take the two.
+
+
+
+\Part Use the above part to argue that {\bf there must exist a convex combination of $p$ threshold functions such that equation \eqref{eq:fp} is true for a deterministically chosen $f_p$}. Conclude that for all functions $f \in \mathcal{F}_{\sf cos}$, we have
+\begin{align*}
+E(f, p) \leq \frac{1}{p},
+\end{align*}
+where $E(f, p)$ was defined in equation \eqref{eq:error}.
+
+
+
+\end{Parts}
+\Question{CNNs on Fruits and Veggies}
+In this problem, we will use the dataset of fruits and vegetables that
+was collected in HW5 and HW6. The goal is to accurately classify the
+produce in the image. In prior homework, we explored how to select features and then use linear classification to learn a function. We will now explore using Convolutional Neural Networks to optimize feature selection jointly with learning a classification policy.
+
+Denote the input state $x \in \mathbb{R}^{90 \times 90 \times 3}$,
+which is a down sampled RGB image with the fruit
+centered in it. Each data point will have a corresponding class label,
+which corresponds to their matching produce. Given 25 classes, we can
+denote the label as $y \in \lbrace 0,...,24 \rbrace$.
+
+The goal of this problem is twofold. First you will learn how to implement a Convolutional Neural Network (CNN) using TensorFlow. Then we will explore some of the mysteries about why neural networks work as well as they do in the context of a bias variance trade-off.
+
+Note all python packages needed for the project, will be imported already. {\bf DO NOT import new Python libraries.} Also, this project will be computationally expensive on your computer's CPU. Please message us on Piazza if you do not have a strong computer and we can arrange for you to use EC2.
+
+
+
+\begin{Parts}
+\Part To begin the problem, we need to implement a CNN in TensorFlow. In order to reduce the burden of implementation, we are going to use a TensorFlow wrapper known as $slim$.   In the starter code is a file named $cnn.py$, the network architecture and the loss function are currently blank. Using the slim library, you will have to write a convolutional neural network that has the following architecture:
+
+\begin{enumerate}
+\item Layer 1: A convolutional layer with 5 filters of size $15$ by $15$
+\item Non-Linear Response: Rectified Linear Units
+\item A max pooling operation with filter size of $3$ by $3$
+\item Layer 2: A Fully Connected Layer with output size $512$.
+\item Non-Linear Response: Rectified Linear Units
+\item Layer 3: A Fully Connected Layer with output size $25$ (i.e. the class labels)
+\item Loss Layer: Softmax Cross Entropy Loss
+\end{enumerate}
+
+
+In the file $example\_cnn.py$, we show how to implement a network in TensorFlow Slim. Please use this as a reference. Once the network is implemented {\bf run the script $test\_cnn\_part\_a.py$ on the dataset and report the resulting confusion matrix}.  The goal is to ensure that your network compiles, but we should not expect the results to be good because it is randomly initialized.
+
+
+
+
+
+
+
+\Part The next step to train the network is to complete the pipeline which loads the datasets and offers it as mini-batches into the network. {\bf Fill in the missing code in $data\_manager.py$ and report your code.}
+
+
+
+\Part We will now complete the iterative optimization loop. Fill in the missing code in $trainer.py$ to iteratively apply SGD for a fix number of iterations. In our system, we will be using an extra Momentum term to help speed up the SGD optimization.  {\bf Run the file $train\_cnn.py$ and report the resulting chart.}
+
+
+
+\Part To better understand, how the network was able to achieve the best performance on our fruits and veggies dataset. It is important to understand that it is learning features to reduce the dimensionality of the data. We can see what features were learned by examining the response maps after our convolutional layer.
+
+The response map is the output image after the convolutional has been applied. This image can be interpreted as what features are interesting for classification. {\bf Fill in the missing code in $viz\_features.py$ and report the images specified}.
+
+
+
+
+\Part Given that our network has achieved high generalization with such low training error, it suggests that a high variance estimator is appropriate for the task. To better understand why the network is able to work, we can compare it to another high variance estimator such as nearest neighbors. {\bf Fill in the missing code in $nn\_classifier.py$ and report the performance as the numbers of neighbors is swept across when $train\_nn.py$ is run.}
+
+
+
+
+
+
+
+\end{Parts}
+
+\Question{Your Own Question}
+
+{\bf Write your own question, and provide a thorough solution.}
+
+Writing your own problems is a very important way to really learn
+material. The famous ``Bloom's Taxonomy'' that lists the levels of
+learning is: Remember, Understand, Apply, Analyze, Evaluate, and
+Create. Using what you know to create is the top-level. We rarely ask
+you any HW questions about the lowest level of straight-up
+remembering, expecting you to be able to do that yourself. (e.g. make
+yourself flashcards) But we don't want the same to be true about the
+highest level.
+
+As a practical matter, having some practice at trying to create
+problems helps you study for exams much better than simply counting on
+solving existing practice problems. This is because thinking about how
+to create an interesting problem forces you to really look at the
+material from the perspective of those who are going to create the
+exams. 
+
+Besides, this is fun. If you want to make a boring problem, go
+ahead. That is your prerogative. But it is more fun to really engage
+with the material, discover something interesting, and then come up
+with a problem that walks others down a journey that lets them share
+your discovery. You don't have to achieve this every week. But unless
+you try every week, it probably won't happen ever. 

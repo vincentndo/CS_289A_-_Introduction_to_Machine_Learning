@@ -1,0 +1,20 @@
+bell pepper_0 colored bell pepper on blank
+bell pepper_1 bell pepper on wood board
+broccoli_0 cut broccoli
+broccoli_1 broccoli in bow on wood table
+cabbage_0 cabbage under sunshine
+cabbage_1 bright cabbage on blank
+carrot_0 carrots packed together
+carrot_1 carrot on wood table
+cauliflower_0 cauliflower on wood table
+cauliflower_1 cauliflower on wood board
+eggplant_0 eggplant on blank
+eggplant_1 eggplant on white plate
+garlic_0 garlic on wood board
+garlic_1 garlic on wood table
+ginger_0 ginger bunch
+ginger_1 organic ginger in big spoon
+spinach_0 spinach in bow on wood table
+spinach_1 spinach on wood
+tomato_0 tomato bunch
+tomato_1 tomato on wood

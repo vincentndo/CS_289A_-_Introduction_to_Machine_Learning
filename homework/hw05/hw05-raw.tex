@@ -1,0 +1,366 @@
+\Question{Getting Started}
+
+You may typeset your homework in latex or submit neatly handwritten and scanned solutions. Please make sure to start each question on a new page, as grading (with Gradescope) is much easier that way! Deliverables:
+
+\begin{enumerate}
+  \item Submit a PDF of your writeup to assignment on Gradescope, ``HW[n] Write-Up"
+%  \item Submit all code needed to reproduce your results, ``HW[n] Code".
+  \item Submit your test set evaluation results, ``HW[n] Test Set".
+\end{enumerate}
+
+After you've submitted your homework, be sure to watch out for the self-grade form.
+
+\begin{Parts}
+
+\Part Before you start your homework, write down your team. Who else did you work with on this homework? List names and email addresses. In case of course events, just describe the group. How did you work on this homework? Any comments about the homework?
+
+\vspace{15pt}
+\framebox(465, 75){}
+
+\Part Please copy the following statement and sign next to it:
+
+\textit{I certify that all solutions are entirely in my words and that I have not looked at another student's solutions. I have credited all external sources in this write up.}
+
+\vspace{15pt}
+\framebox(465, 75){}
+
+\end{Parts}
+
+\pagebreak
+\Question{Properties of Convex Functions}
+
+%Problem 2
+%* compute the Hessian of the linear least squares problem
+
+In lecture, we will introduce gradient descent as a powerful general optimization tool which, under most conditions, will converge to a local minimum of an objective function. However, a local minimum may not always be a good solution. When a function is convex, its local minima are global minima. Thus, gradient descent is an especially powerful tool for numerically optimizing convex functions. It is very useful to recognize when a function is convex or not.
+
+Before we get to a convex function, though, let's talk about convex \emph{sets}. A convex set is a set $S$ where $$x_1 \in S, x_2 \in S \implies \lambda x_1 + (1 - \lambda) x_2 \in S,$$ where $0 \leq \lambda \leq 1$. In words, a convex set is a set $S$ where $x_1$ in $S$ and $x_2$ in $S$ implies that everything ``in between'' $x_1$ and $x_2$ is also in $S$.
+
+There are several equivalent ways to define a convex \emph{function}. Here are three:
+\begin{itemize}
+	\item A function $f$ is convex if $$\lambda f(x_1) + (1 - \lambda) f(x_2) \geq f(\lambda x_1 + (1-\lambda) x_2)$$ for any $x_1$ and $x_2$ in the domain of $f$ and $0 \leq \lambda \leq 1$.
+	\item A function $f$ is convex if the set $S_f = \{(x, y)|x \in \mathbb{R}^n, y \in \mathbb{R}, y \geq f(x)\}$ is convex. The set $S_f$ is called the \emph{epigraph} of the function $f$. It is all the points that lie ``above'' the curve $f$.
+	\item A function $f$ is convex if its Hessian matrix (the matrix of second partial derivatives) is positive semi-definite everywhere on the domain of $f$. This definition assumes the Hessian matrix exists everywhere on the domain, which is not true for non-differentiable functions.
+\end{itemize}
+
+\begin{Parts}
+
+
+\Part \textbf{Give an example of a function $f$ from $\mathbb{R}$ to $\mathbb{R}$ which is convex, but not differentiable at at least one point in the domain of $f$.}
+
+
+\Part \textbf{Compute the Hessian of the function $f$ which maps a vector $x$ to its loss in the ordinary least squares problem.} As a reminder, the function $f$ is $$f(x) = ||Ax-y||^2,$$ where $x \in \mathbb{R}^d$ and $A$ and $y$ are constants. This is the function we minimize to get the optimal solution $x^*$. \textbf{Argue that the Hessian of $f$ is positive semi-definite.}
+
+
+% \Part \textbf{Prove that the first definition of a convex function (in terms of $\lambda$) and second definition of a convex function (in terms of the epigraph) are equivalent.}
+% 
+
+\Part \textbf{Prove that if $f$ is convex and if $x_0$ is a local minimum of $f$, then $x_0$ is also a global minimum.} Remember that a local minimum is defined as follows: if $x_0$ is a local minimum, then there exists an $\epsilon$ such that $$||x_0-x|| < \epsilon \implies f(x) \geq f(x_0).$$ (Hint: first express clearly what does it mean for a function to have a global minimum at $x_0$.) 
+
+
+\Part If $f$ and $g$ are convex functions, consider the functions $h$ defined below. \textbf{Either prove that $h$ is always convex (for any $f$ and $g$) or provide a counter-example (where $f$ and $g$ are convex, but $h$ is not)}:
+\begin{enumerate}[(i)]
+	\item $h(x) = f(x) + g(x)$
+	\item $h(x) = \min{\{f(x), g(x)\}}$
+	\item $h(x) = \max{\{f(x), g(x)\}}$
+	\item $h(x) = f(g(x))$
+\end{enumerate}	
+
+
+\end{Parts}
+
+\newcommand{\EE}{\ensuremath{\mathbb{E}}}
+
+\Question{Canonical Correlation Analysis}
+
+In this problem, we will work our way through the singular value decomposition, and show how it helps yield a solution to the problem of canonical correlation analysis.
+
+\begin{Parts}
+\Part Let $n \geq d$. For a matrix $A \in \mathbb{R}^{n \times d}$ having full column rank and singular value decomposition $A = U \Sigma V^\top$, we know that the singular values are given by the diagonal entries of $\Sigma$, and the left (resp. right) singular vectors are the columns of the matrix $U$ (resp. $V$). Both $U$ and $V$ have orthonormal columns.
+
+{\bf Show that $A = \sum_{i=1}^d \sigma_i u_i v_i^\top$, where the $i$th singular value is denoted by $\sigma_i = \Sigma_{ii}$ and $u_i$ and $v_i$ are the $i$th left and right singular vectors, respectively.}
+
+
+
+\Part {\bf With the setup above, show that 
+
+i) $A^\top A$ has $i$th eigenvalue $\lambda_i = \sigma_i^2$, with associated eigenvector $v_i$.
+
+i) $A A^\top$ has $i$th eigenvalue $\lambda_i = \sigma_i^2$, with associated eigenvector $u_i$.}
+
+Notice that both of the above matrices are symmetric.
+
+%Hint: The spectral theorem for symmetric matrices may be useful.
+
+
+
+%###############################################################
+
+\Part {\bf Use the first part to show that
+\begin{align*}
+\sigma_1 (A) = \max_{\substack{u: \|u\|_2 = 1 \\ v: \|v\|_2 = 1}} u^\top A v,
+\end{align*}
+where $\sigma_1(A)$ is the maximum singular value of $A$.
+
+Additionally, show that if $A$ has a unique maximum singular value, then the maximizers $(u^*, v^*)$ above are given by the first left and right singular vectors, respectively.}
+
+Hint 1: You can express any $u: \|u \|_2 = 1$ as a linear combination of left singular vectors of the matrix $A$, and similarly with $v$ and right singular vectors. You may or may not find this hint useful.
+
+Hint 2: You may find the following facts that hold for any two vectors $a, b \in \mathbb{R}^d$ useful: \\
+Cauchy-Schwarz inequality: $|a^\top b| \leq \|a\|_2 \|b\|_2$, with equality when $b$ is a scaled version of $a$. \\
+Holder's inequality: $|a^\top b| \leq \| a\|_1 \|b\|_\infty$. Here, the $\ell_1$ and $\ell_\infty$ norms of a vector $v$ are defined by $\|v\|_1 = \sum_i |v_i|$, and $\|v\|_\infty = \max_i |v_i|$. Let us say the vector $b$ is fixed; then one way to achieve equality in the Holder inequality is to have: \\
+Let $i$ be such that $|b_i| = \|b\|_\infty$. \\
+Set $a_i = \|a\|_1$, and $v_i = 0$ for all $j \neq i$.
+
+
+
+
+%###############################################################
+
+\Part Define the correlation coefficient between two scalar zero-mean random variables $P$ and $Q$ as
+\begin{align*}
+\rho(P, Q) = \frac{\EE [PQ]}{\sqrt{\EE[P^2] \EE[Q^2]}}.
+\end{align*}
+
+Let us now look at the canonical correlation analysis problem, where we are given two (say, zero mean) random vectors $X, Y \in \mathbb{R}^d$, with covariance (and variance) given by
+\begin{align*}
+\EE [XX^\top] &= \Sigma_{XX} \\
+\EE [YY^\top] &= \Sigma_{YY} \\
+\EE [XY^\top] &= \Sigma_{XY}.
+\end{align*}
+Note that a linear combination of the random variables in $X$ can be written as $a^\top X$, and similarly, a linear combination of RVs in $Y$ can be written as $b^\top Y$. Note that $a^\top X, b^\top Y \in \mathbb{R}$ are scalar random variables. 
+
+The goal of CCA is to find linear combinations that maximize the correlation. In other words, we want to solve the problem
+\begin{align*}
+\rho = \max_{a, b \in \mathbb{R}^d} \rho(a^\top X, b^\top Y).
+\end{align*}
+
+{\bf Show that the problem can be rewritten as
+\begin{align*}
+\rho = \max_{a, b \in \mathbb{R}^d} \frac{a^\top \Sigma_{XY} b}{ \left( a^\top \Sigma_{XX} a\right)^{1/2} \left( b^\top \Sigma_{YY} b\right)^{1/2} }.
+\end{align*}
+Conclude that if $(a^*, b^*)$ is a maximizer above, then $(\alpha a^*, \beta b^*)$ is a maximizer for any $\alpha, \beta > 0$.}
+
+
+
+%###############################################################
+
+\Part Assume that the covariance matrices $\Sigma_{XX}$ and $\Sigma_{YY}$ are full rank, and denote the maximizers in the above problem by $(a^*, b^*)$. Use the above parts to {\bf show that}
+
+i) $\rho^2$ is the maximum eigenvalue of the matrix $$\Sigma_{XX}^{-1/2} \Sigma_{XY} \Sigma_{YY}^{-1} \Sigma_{XY}^\top \Sigma_{XX}^{-1/2}.$$
+
+ii) $\Sigma_{XX}^{1/2} a^*$ is the maximal eigenvector of the matrix $$\Sigma_{XX}^{-1/2} \Sigma_{XY} \Sigma_{YY}^{-1} \Sigma_{XY}^\top \Sigma_{XX}^{-1/2}.$$
+
+iii) $\Sigma_{YY}^{1/2} b^*$ is the maximal eigenvector of the matrix $$\Sigma_{YY}^{-1/2} \Sigma_{XY}^\top \Sigma_{XX}^{-1} \Sigma_{XY} \Sigma_{YY}^{-1/2}.$$
+
+Hint: An appropriate change of variables may make your life easier.
+
+
+
+%###############################################################
+
+\Part {\bf Argue why ``vanilla'' CCA is useless when the random vectors $X$ and $Y$ are uncorrelated, where by this we mean that ${\sf cov}(X_i, Y_j) = 0$ for all $i, j$.}. If you happen to know that $X$ and $Y^2$ (where this is defined by squaring each entry of $Y$) share a linear relationship, {\bf how might you modify the CCA procedure to account for this?}
+
+
+
+\end{Parts}
+
+\Question{Mooney Reconstruction}
+In this problem, we will try to restore photos of celebrities from Mooney photos, which are binarized faces. In order to do this, we will leverage a large training set of grayscale faces and Mooney faces. 
+
+Producing a face reconstruction from a binarized counterpart is a
+challenging high dimensional problem, but we will show that we can
+learn to do so from data. In particular, using the power of Canonical
+Correlation Analysis (CCA), we will reduce the dimensionality of the
+problem by projecting the data into a subspace where the images are
+most correlated. 
+
+Images are famously redundant and well representable in lower-dimensional
+subspaces as the eigenfaces example in class showed. However, here our
+goal is to relate two different kinds of images to each other. Let's
+see what happens.
+
+\begin{figure}[h!]
+    \begin{center}
+    \includegraphics[scale=.05]{src/problems/pca/airplane.pdf}
+    {\caption A binarized Mooney image of an face being restored to its original grayscale image.  } \label{fig:robot}
+    \end{center}
+\end{figure}
+
+
+The following datasets will be used for this project: X\_train.p,
+Y\_train.p, X\_test.p and Y\_test.p. The training data X\_train.p
+contains 956 binarized images, where $x_i \in \mathbb{R}^{15 \times 15
+  \times 3}$. The test data X\_test.p contains 255 binarized images
+with the same dimensionality. Y\_train.p contains 956 corresponding
+grayscale images, where $y_i \in  \mathbb{R}^{ 15 \times 15 \times 3
+}$. Y\_test.p contains 255 grayscale images that correspond to
+X\_test.p. 
+
+Note: When loading the dataset please use cPickle, a C level optimized version of Pickle. 
+
+
+Through out the problem we will assume that all data points are flattened and standardize as follows: 
+
+$$x = (x/255)*2.0 - 1.0$$
+
+(Note, however, that this standardization during loading the data does
+not remove the need to do actual mean removal during processing.) 
+
+Please use only the following libraries to solve the problem in Python 2.7:
+
+\begin{lstlisting}
+import cPickle as pickle
+from scipy.linalg import eig
+from scipy.linalg import sqrtm
+from numpy.linalg import inv
+from numpy.linalg import svd
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+\end{lstlisting}
+
+
+
+\begin{Parts}
+\Part We use CCA to find pairs of directions $a$ and $b$
+that maximize the correlation between the projections $\tilde{x} = a^T\mathbf{x}$ and $\tilde{y} = b^T\mathbf{y}$,  From the previous problem, we know that this can be done by solving the problem 
+
+$$\mbox{max} \rho = \max_{a, b} \frac{a^\top \Sigma_{XY} b}{ \left( a^\top \Sigma_{XX} a\right)^{1/2} \left( b^\top \Sigma_{YY} b\right)^{1/2} },$$ 
+
+where $\Sigma_{XX}$ and $\Sigma_{YY}$ denote the covariance matrices
+of the $X$ and $Y$ images, and $\Sigma_{XY}$ denotes the covariance
+between $X$ and $Y$. Note that unlike in the previous problem, we are not given the covariance matrices and must estimate them from $X, Y$ image samples.
+
+{\bf Write down how to estimate the three covariance matrices from finite samples of data and implement the code for it}.
+
+
+
+
+
+\Part We know from the previous problem that we are interested in the
+maximum singular value of the matrix $\Sigma_{XX}^{-1/2} \Sigma_{XY}
+\Sigma_{YY}^{-1/2}$, and that this corresponds to the maximum correlation coefficient $\rho$. 
+
+Now, however, {\bf plot the full ``spectrum'' of singular values of the matrix $(\Sigma_{XX}+\lambda I)^{-1/2} \Sigma_{XY} (\Sigma_{YY}+\lambda I)^{-1/2}$.} Note for numerical issues we need to add a very small identity matrix to the covariance terms. Set $\lambda = 0.00001$. 
+
+% {\bf Plot the returned eigenvalues after solving the optimization}. Hint: You can use scipy.linalg.eig 
+
+
+
+
+\Part You should have noticed from the previous part that we have some singular value decay. It therefore makes sense to only consider the top singular value(s), as in CCA. Let us now try to project our images $x$ on to the subspace spanned by the top $150$ singular values. Given that the SVD $U\Sigma V^T = \Sigma_{XX}^{-1/2} \Sigma_{XY} \Sigma_{YY}^{-1/2}$, we can use the left hand eigenvectors to form a projection.  %We can denote this projected matrix as: 
+
+\[ P_k = \begin{bmatrix}
+   u_0 ,   & u_1, & ... & u_{k} \\
+\end{bmatrix},   \]
+
+{\bf Show/visualize the ``face'' corresponding to the first eigenvector $u_0$. }. Use the following code for the visualization. 
+
+\begin{lstlisting}
+	def plot_image(self,vector):
+		vector = ((vector+1.0)/2.0)*255.0
+
+		vector = np.reshape(vector,(15,15,3))
+
+		p = vector.astype("uint8")
+
+		p = cv2.resize(p,(100,100))
+		count = 0
+
+		cv2.imwrite('eigen_face.png',p)
+\end{lstlisting}
+
+
+
+
+
+\Part We will now examine how well the projected data helps
+generalization when performing regression. You can think of CCA as a
+technique to help learn better features for the problem. We will use
+ridge regression regression to learn a mapping from the projected
+binarized data to the grayscale images. 
+
+$$\underset{w}{\mbox{min}} ||P_k^TX w - Y||^2_2 + \lambda||w||^2_2$$
+
+
+{\bf Implement Ridge Regression with $\lambda = 0.00001$. Plot the
+  Squared Euclidean test error for the following values of $k$ (the
+  dimensions you reduce to):
+
+$k = \lbrace 0,50,100,150,200,250,300,350,400,450,500,650 \rbrace$.}
+
+
+
+\Part {\bf Try running the learned model on 4 of the images in the
+  test set and report the results. Give both the binarized input, the
+  true grayscale, and the output of your model.} Note: You can use the code from above to visualize the images.
+
+
+
+
+
+
+
+
+
+
+\end{Parts}
+
+\Question{Fruits!}
+The goal of the problem is help the class build a dataset for image classification, which will be used later in the course to classify fruits and vegetables. Please pick ten of the following fruits:
+
+\begin{enumerate}
+\item Apple
+\item Banana
+\item Oranges
+\item Grapes
+\item Strawberry
+\item Peach
+\item Cherry
+\item Nectarine
+\item Mango
+\item Pear
+\item Plum
+\item Watermelon
+\item Pineapple
+\end{enumerate}
+
+
+%{\bf Take two pictures of each specific fruit, for a total of 20 fruit pictures,} against a background such that the fruit is centered in the image and the fruit takes up approximately a third of the image in area; see below for examples. Save these pictures as .png files. {\bf Do not} save the pictures as .jpg files, since these are lower quality and will interfere with the results of your future coding project. Place all the images in a folder titled \emph{data}. Each image should be titled \emph{[fruit name]\_[number].png} where [number]$\in \{0, 1\}$. Ex: apple\_0.png, apple\_1.png, banana\_0.png, etc \ldots (the ordering is irrelevant). Please also include a file titled \emph{rich\_labels.txt} which contain entries on new lines prefixed by the file name \emph{[fruit name]\_[number]}, followed by a description of the image (maximum of eight words) with only a space delimiter in between. Ex: apple\_0 one fuji red apple on wood table. To turn in the folder compress the file to a .zip and upload it to Gradescope.
+
+{\bf Take two pictures of each specific fruit, for a total of 20 fruit pictures,} against a background; see below for examples. Save these pictures as .png files. {\bf Do not} save the pictures as .jpg files, since these are lower quality and will interfere with the results of your future coding project. Place all the images in a folder titled \emph{data}. Each image should be titled \emph{[fruit name]\_[number].png} where [number]$\in \{0, 1\}$. Ex: apple$\_0$.png, apple$\_1$.png, banana$\_0$.png, etc $\ldots$ (the ordering is irrelevant). Please also include a file titled \emph{rich\_labels.txt} which contain entries on new lines prefixed by the file name \emph{[fruit name]\_[number]}, followed by a description of the image (maximum of eight words) with only a space delimiter in between. Ex: apple\_0 one fuji red apple on wood table. To turn in the folder compress the file to a .zip and upload it to Gradescope.
+
+\begin{figure}[h!]
+    \begin{center}
+    \includegraphics[scale=.05]{src/problems/data_collection/fruit_examples.pdf}
+    \caption{Example images of four bananas (left) and one orange (right).} \label{fig:robot}
+    \end{center}
+\end{figure}
+
+Please keep in mind that data is an integral part of Machine Learning. A large part of research in this field relies heavily on the integrity of data in order to run algorithms. It is, therefore, vital that your data is in the proper format and is accompanied by the correct labeling not only for your grade on this section, but for the integrity of your data.
+\Question{Your Own Question}
+
+{\bf Write your own question, and provide a thorough solution.}
+
+Writing your own problems is a very important way to really learn
+material. The famous ``Bloom's Taxonomy'' that lists the levels of
+learning is: Remember, Understand, Apply, Analyze, Evaluate, and
+Create. Using what you know to create is the top-level. We rarely ask
+you any HW questions about the lowest level of straight-up
+remembering, expecting you to be able to do that yourself. (e.g. make
+yourself flashcards) But we don't want the same to be true about the
+highest level.
+
+As a practical matter, having some practice at trying to create
+problems helps you study for exams much better than simply counting on
+solving existing practice problems. This is because thinking about how
+to create an interesting problem forces you to really look at the
+material from the perspective of those who are going to create the
+exams. 
+
+Besides, this is fun. If you want to make a boring problem, go
+ahead. That is your prerogative. But it is more fun to really engage
+with the material, discover something interesting, and then come up
+with a problem that walks others down a journey that lets them share
+your discovery. You don't have to achieve this every week. But unless
+you try every week, it probably won't happen ever. 
